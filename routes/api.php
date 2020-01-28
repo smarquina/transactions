@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -12,7 +10,22 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+$api = app('Dingo\Api\Routing\Router');
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+$api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => ['api']], function ($api) {
+    /** @var Dingo\Api\Routing\Router $api */
+
+    $api->group(array('prefix' => 'auth', 'namespace' => 'Auth', 'as' => 'auth.'), function ($api) {
+        $api->post('login',                 'LoginController@login');
+
+    });
+
+    //Private Routes
+    $api->group(array('middleware' => ['jwt.auth']), function ($api) {
+        $api->group(array('prefix' => 'transaction', 'namespace' => 'Transaction', 'as' => 'transaction.'), function ($api) {
+            $api->post('create',        'TransactionController@createTransaction');
+            $api->get('sent',           'TransactionController@sentTransactions');
+            $api->get('income',         'TransactionController@incomeTransactions');
+        });
+    });
 });

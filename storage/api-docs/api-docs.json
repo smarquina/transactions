@@ -1,0 +1,245 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Verse Test API",
+        "description": "This is an Verse test api.",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "email": "sergyzen@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "#",
+            "description": "Verse OpenApi host"
+        }
+    ],
+    "paths": {
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Login users",
+                "operationId": "login",
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "description": "required email",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "user password",
+                                        "type": "string|required"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "email": "smarquina",
+                                    "password": "XXXX"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User and token",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "550": {
+                        "description": "User not found / Can't generate user token."
+                    },
+                    "403": {
+                        "description": "invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/transaction/create": {
+            "post": {
+                "tags": [
+                    "transaction"
+                ],
+                "summary": "Store new transaction",
+                "operationId": "createTransaction",
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "user_to": {
+                                        "type": "required|exists:users,id"
+                                    },
+                                    "quantity": {
+                                        "type": "required|numeric|min:0"
+                                    },
+                                    "subject": {
+                                        "type": "required|string|max:255"
+                                    },
+                                    "comment": {
+                                        "type": "nullable|string|max:1000"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Transaction data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Transaction"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Reqest validarion errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "title": "message",
+                                        "description": "message",
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "550": {
+                        "description": "Cant store data"
+                    }
+                }
+            }
+        },
+        "/api/transaction/sent": {
+            "get": {
+                "tags": [
+                    "transaction"
+                ],
+                "summary": "Sent transactions",
+                "operationId": "sentTransactions",
+                "responses": {
+                    "200": {
+                        "description": "A list of my transactions",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Transaction"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/transaction/income": {
+            "get": {
+                "tags": [
+                    "transaction"
+                ],
+                "summary": "Income transactions",
+                "operationId": "incomeTransactions",
+                "responses": {
+                    "200": {
+                        "description": "A list of my transactions",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Transaction"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Transaction": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "user_from": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "user_to": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "quantity": {
+                        "type": "float"
+                    },
+                    "subject": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "comment",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "nullable": false
+                    },
+                    "name": {
+                        "type": "string",
+                        "nullable": false
+                    },
+                    "email": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "amount": {
+                        "type": "float",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "transaction",
+            "description": "Manage user transactions"
+        }
+    ]
+}

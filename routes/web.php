@@ -11,6 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Auth::routes();
+
+Route::group(['middleware' => 'auth'], function () {
+
+    Route::get('/', function () {
+        return view('welcome');
+    });
+
+    Route::get('/home', 'HomeController@index')->name('home');
+
+    Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
+
+        Route::resource('user', 'User\UserController')->except(['show', 'delete']);
+        Route::resource('transaction', 'Transaction\TransactionController')->except(['edit', 'delete']);
+    });
 });
