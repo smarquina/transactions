@@ -31,6 +31,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string|null                                                                                                    $remember_token
  * @property \Illuminate\Support\Carbon|null                                                                                $created_at
  * @property \Illuminate\Support\Carbon|null                                                                                $updated_at
+ * @property double                                                                                                         $amount
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User newQuery()
@@ -43,9 +44,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property float $amount
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereAmount($value)
+ * @mixin \Eloquent
  */
 class User extends BaseModel implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract, JWTSubject
 {

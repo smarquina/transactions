@@ -45,7 +45,7 @@ class TransactionResource extends JsonResource
     /**
      * @OA\Property(
      *   property="quantity",
-     *   type="float"
+     *   type="double"
      * )
      */
 

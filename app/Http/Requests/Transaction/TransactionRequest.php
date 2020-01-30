@@ -27,7 +27,7 @@ class TransactionRequest extends ApiRequest
     {
         return [
             'user_to'  => 'required|integer|exists:users,id',
-            'quantity' => 'required|numeric',
+            'quantity' => 'required|integer',
             'subject'  => 'required|string|max:255',
             'comment'  => 'nullable|string|max:1000',
         ];

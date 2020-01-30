@@ -19,7 +19,7 @@ class CreateTransactionTable extends Migration
             $table->unsignedBigInteger('user_to');
             $table->string('subject');
             $table->string('comment')->nullable();
-            $table->float('quantity');
+            $table->double('quantity');
             $table->timestamps();
 
             $table->foreign('user_from')->references('id')->on('users')->onDelete('cascade');

@@ -48,7 +48,7 @@ class UserResource extends JsonResource
     /**
      * @OA\Property(
      *   property="amount",
-     *   type="float",
+     *   type="double",
      *   nullable=true,
      * )
      */
