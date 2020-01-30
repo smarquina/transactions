@@ -11,6 +11,7 @@ namespace App\Models\User;
 
 
 use App\Models\BaseModel;
+use App\Models\Transaction\Transaction;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
@@ -33,6 +34,11 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property \Illuminate\Support\Carbon|null                                                                                $updated_at
  * @property double                                                                                                         $amount
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read int|null                                                                                                  $income_transactions_count
+ * @property-read int|null                                                                                                  $notifications_count
+ * @property-read int|null                                                                                                  $sent_transactions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Transaction\Transaction[]                            $incomeTransactions
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Transaction\Transaction[]                            $sentTransactions
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User query()
@@ -77,6 +83,24 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Sent transactions
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sentTransactions()
+    {
+        return $this->hasMany(Transaction::class, 'user_from');
+    }
+
+    /**
+     * Income transactions
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function incomeTransactions()
+    {
+        return $this->hasMany(Transaction::class, 'user_to');
+    }
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.

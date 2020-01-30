@@ -16,16 +16,16 @@ use App\Models\User\User;
 /**
  * App\Models\Transaction\Transaction
  *
- * @property int $id
- * @property int $user_from
- * @property int $user_to
- * @property string $subject
- * @property string|null $comment
- * @property mixed $quantity
+ * @property int                             $id
+ * @property int                             $user_from
+ * @property int                             $user_to
+ * @property string                          $subject
+ * @property string|null                     $comment
+ * @property mixed                           $quantity
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\User\User $userFrom
- * @property-read \App\Models\User\User $userTo
+ * @property-read \App\Models\User\User      $userFrom
+ * @property-read \App\Models\User\User      $userTo
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Transaction\Transaction newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Transaction\Transaction newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Transaction\Transaction query()
