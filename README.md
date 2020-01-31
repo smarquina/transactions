@@ -11,7 +11,7 @@ This is a transactions demo backend & API. Made with the Laravel framework
    Requirements are specified in the `docker-compose.yml` file. Environment configurations are defined in Dockerfile.
    To install it follow next steps:
    
-   1. Run `git clone https://github.com/smarquina/transactions.git tranactions`
+   1. Run `git clone https://github.com/smarquina/transactions.git transactions`
    2. Make sure you have installed [Docker](https://docs.docker.com/). 
    Then, from the projects root folder run `docker-compose up` 
    3. Once container is installed and running, it can be accessed on `localhost:3000`
@@ -28,7 +28,7 @@ This is a transactions demo backend & API. Made with the Laravel framework
    To run it on your own server, you need to configure first dependencies, 
    environment variables and a MySQL or MariaDB.
 
-1. Run `git clone https://github.com/smarquina/transactions.git tranactions`
+1. Run `git clone https://github.com/smarquina/transactions.git transactions`
 2. Create a MySQL database for the project
     * ```mysql -u root -p```, if using Vagrant: ```mysql -u homestead -p secret```
     * ```create database transactions;```
