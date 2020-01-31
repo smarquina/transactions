@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  mariadb:
+    image: 'bitnami/mariadb:10.1'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=transactions
+      - MARIADB_DATABASE=transactions
+      - MARIADB_PASSWORD=transactions
+
+  transactions-test:
+    tty: true
+    image: bitnami/laravel:6-debian-9
+    environment:
+      - DB_HOST=mariadb
+      - DB_USERNAME=transactions
+      - DB_DATABASE=transactions
+      - DB_PASSWORD=transactions
+      - COMPOSE_PROJECT_NAME=transactions-test
+    depends_on:
+      - mariadb
+    links:
+      - "mariadb:database"
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/app
+    privileged: true # Privileged mode could be required to run this container under Windows
